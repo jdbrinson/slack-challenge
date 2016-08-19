@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		077B9F0E1D66301B00B0F3AC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077B9F0D1D66301B00B0F3AC /* main.cpp */; };
+		077B9F7A1D66B99000B0F3AC /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077B9F791D66B99000B0F3AC /* jsoncpp.cpp */; };
+		077B9F931D66C90E00B0F3AC /* libcurl.4.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 077B9F7C1D66BF0800B0F3AC /* libcurl.4.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		077B9F0A1D66301B00B0F3AC /* Slack code */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Slack code"; sourceTree = BUILT_PRODUCTS_DIR; };
 		077B9F0D1D66301B00B0F3AC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		077B9F771D66B93000B0F3AC /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = json.h; path = "Slack code/json/json.h"; sourceTree = "<group>"; };
+		077B9F791D66B99000B0F3AC /* jsoncpp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = "Slack code/jsoncpp.cpp"; sourceTree = "<group>"; };
+		077B9F7C1D66BF0800B0F3AC /* libcurl.4.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.4.tbd; path = usr/lib/libcurl.4.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				077B9F931D66C90E00B0F3AC /* libcurl.4.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +47,9 @@
 		077B9F011D66301A00B0F3AC = {
 			isa = PBXGroup;
 			children = (
+				077B9F7C1D66BF0800B0F3AC /* libcurl.4.tbd */,
+				077B9F791D66B99000B0F3AC /* jsoncpp.cpp */,
+				077B9F771D66B93000B0F3AC /* json.h */,
 				077B9F0C1D66301B00B0F3AC /* Slack code */,
 				077B9F0B1D66301B00B0F3AC /* Products */,
 			);
@@ -121,6 +130,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				077B9F7A1D66B99000B0F3AC /* jsoncpp.cpp in Sources */,
 				077B9F0E1D66301B00B0F3AC /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
