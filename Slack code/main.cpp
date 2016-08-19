@@ -10,10 +10,12 @@
 #include <string>
 #include <curl/curl.h>
 #include "json/json.h"
-#include <map>
+
+#include <pthread.h>
 
 const std::string APIURL = "https://slack.com/api/";
 const int CHANNEL_NAME_MAX_LENGTH = 21;
+pthread_mutex_t SHUTDOWN;
 
 size_t retrieve_data_callback(char *data, size_t size, size_t nmemb, void *raw_json){
     ((std::string *)raw_json)->append(data, size*nmemb);
@@ -83,10 +85,11 @@ std::string extract_text(Json::Value j_message){
     return j_message[text].asString();
 }
 
-std::vector<std::string> extract_messages(std::string &payload){
+std::vector<std::string> extract_messages(std::string &payload, std::string channel_id, std::map<std::string, Json::Value> &j_messageMap){
     std::vector<std::string> messages;
     Json::Value jObj = parse_payload(payload);
     const Json::Value j_messageList = jObj.get("messages", "default");
+    j_messageMap.insert(std::pair<std::string, Json::Value>(channel_id, j_messageList));
     int messageIndex = 0;
     while(j_messageList.isValidIndex(messageIndex)){
         if(isMessage(j_messageList[messageIndex])){
@@ -105,43 +108,79 @@ std::string get_channel_id(Json::Value j_channel){
     return channel_id;
 }
 
-void show_message_history(std::string slack_token, Json::Value j_channel){
+void show_message_history(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value>& j_messageMap){
+    
     std::string payload = "";
     std::string methodName = "channels.history";
-    std::string param = "&channel=" + get_channel_id(j_channel);
+    std::string channel_id = get_channel_id(j_channel);
+    std::string param = "&channel=" + channel_id;
     call_slack(slack_token, methodName, payload, param);
-    std::vector<std::string> messages = extract_messages(payload);
+    pthread_mutex_lock(&SHUTDOWN);
+    std::vector<std::string> messages = extract_messages(payload, channel_id, j_messageMap);
+    pthread_mutex_unlock(&SHUTDOWN);
     std::cout << "Message History: \n";
     for(int message_index = 0; message_index < messages.size(); message_index++){
         std::cout << messages[message_index] << "\n";
     }
 }
 
-void show_message_history_num(std::string slack_token, std::string channel, std::map<std::string, Json::Value> &j_channelMap){
-    std::cout << channel;
-    show_message_history(slack_token, j_channelMap[channel]);
+const void show_message_history_num(std::string slack_token, std::string channel, std::map<std::string, Json::Value> &j_channelMap,std::map<std::string, Json::Value> &j_messageMap ){
+    show_message_history(slack_token, j_channelMap[channel], j_messageMap);
 }
 
-void select_channel(std::string slack_token, std::vector<std::string> channelList,  std::map<std::string, Json::Value> &j_channelMap){
+struct threadData{
+    std::string slack_token;
+    std::string channel;
+    std::map<std::string, Json::Value> j_channelMap;
+    std::map<std::string, Json::Value> j_messageMap;
+    int num;
+};
+
+void* thread_show_history(void* threadarg){
+    struct threadData *mydata;
+    mydata = (threadData*)threadarg;
+    show_message_history_num(mydata->slack_token, mydata->channel, mydata->j_channelMap, mydata->j_messageMap);
+    //pthread_exit(NULL);
+    return NULL;
+}
+
+
+void select_channel(std::string slack_token, std::vector<std::string> channelList,  std::map<std::string, Json::Value> &j_channelMap, std::map<std::string, Json::Value> &j_messageMap){
+    void * status;
     char selected[CHANNEL_NAME_MAX_LENGTH];
-    std::cout << "select channel (number or name) for message history";
+    
+    std::cout << "select channel (number or name) for message history: ";
     std::cin >> selected;
     if(isdigit(selected[0])){
         int num;
+        //converts string to int
         std::stringstream convert(selected);
         if(!(convert>> num)){
             num = 1;
         }
         num--;
-        show_message_history_num(slack_token, channelList[num], j_channelMap);
+        std::string channel = channelList[num];
+        pthread_t threads[1];
+        struct threadData td;
+        td.slack_token = slack_token;
+        td.channel = channelList[num];
+        td.j_channelMap = j_channelMap;
+        int rc = pthread_create(&threads[0], NULL, thread_show_history, (void*)&td);
+        if(rc){
+            std::cout << "couldn't create thread";
+            exit(-1);
+        }
+        
+        for(int i = 0; i <channelList.size(); i++){
+            if(i != num){
+                show_message_history_num(slack_token, channelList[i], j_channelMap, j_messageMap);
+            }
+           
+        }
+        pthread_join(threads[0], &status);
+        
     }else{
-        show_message_history(slack_token, j_channelMap[selected]);
-//        for(int channel_index = 0; channel_index<channelList.size(); channel_index++){
-//            if(strcmp(selected, channelList[channel_index].c_str())){
-//                show_message_history(channelList[channel_index], slack_token);
-//                break;
-//            }
-//        }
+        show_message_history(slack_token, j_channelMap[selected], j_messageMap);
     }
 }
 
@@ -156,12 +195,20 @@ int main(int argc, const char * argv[]) {
     
     std::cin >> slack_token;
     std::map<std::string, Json::Value> j_channelMap;
+    std::map<std::string, Json::Value> j_messageMap;
      //2)get/list all available channels
     std::vector<std::string> channelList = get_channel_list(slack_token, j_channelMap);
      //3)wait for select channel/show message history
-    select_channel(slack_token, channelList, j_channelMap);
+    select_channel(slack_token, channelList, j_channelMap, j_messageMap);
+//    std::cout << "final shabang!\n";
+//    for(std::map<std::string, Json::Value>::iterator it=j_messageMap.begin(); it!=j_messageMap.end(); ++it){
+//        std::cout << it->first << " : " << it->second << "\n";
+//    }
+    
      //4)cache data
     
+    pthread_mutex_destroy(&SHUTDOWN);
+    pthread_exit(NULL);
 
     return 0;
 }
