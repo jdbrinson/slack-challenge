@@ -49,8 +49,6 @@ std::vector<std::string> extract_channels(std::string &payload){
         channel_index++;
     }
     return channels;
-//    std::vector<std::string> channels;
-//    return channels;
 }
 
 void get_channel_list(std::string slack_token){
@@ -60,17 +58,12 @@ void get_channel_list(std::string slack_token){
     call_slack(slack_token, methodName, payload, param);
     std::vector<std::string> channels = extract_channels(payload);
     std::cout << "Channel List:";
-    for(std::vector<std::string>::iterator it = channels.begin(); it != channels.end(); ++it){
-        std::cout << "\n" << *it;
+    for(int channel_index = 0; channel_index<channels.size(); channel_index++){
+        std::cout <<  "\n" << channel_index+1 << ":" << channels[channel_index];
     }
     std::cout << "\n";
 }
 
-
-void get_channelList( std::string &payload){
-    //extract_channel_list(payload);
-    //print channel list
-}
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -85,9 +78,10 @@ int main(int argc, const char * argv[]) {
 
      //2)get/list all available channels
     get_channel_list(slack_token);
-     /*3)wait for select channel/show message history
-     4)cache data
-     */
+     //3)wait for select channel/show message history
+    //select_channel();
+     //4)cache data
+    
 
     return 0;
 }
