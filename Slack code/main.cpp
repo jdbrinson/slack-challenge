@@ -18,9 +18,10 @@
 
 const std::string APIURL = "https://slack.com/api/";
 const int CHANNEL_NAME_MAX_LENGTH = 21;
-pthread_mutex_t SHUTDOWN;
+pthread_mutex_t  output_lock, size_lock, map_lock;
 const int BUFFER_SIZE = 20;
-sem_t map_lock;
+//sem_t *map_lock;
+pthread_cond_t *full;
 
 size_t retrieve_data_callback(char *data, size_t size, size_t nmemb, void *raw_json){
     ((std::string *)raw_json)->append(data, size*nmemb);
@@ -65,68 +66,100 @@ std::vector<std::string> extract_channels(std::string &payload, std::map<std::st
     return channels;
 }
 
-void cache_upkeep(const std::string content, std::map<std::string, Json::Value> &j_objMap, std::string channel_id){
+void cache_upkeep(const std::string content, std::map<std::string, Json::Value> &j_objMap){
     //create_cache if none
+    Json::Value cached_data;
+    Json::Reader reader;
+    Json::Writer *writer = new Json::StyledWriter();
+    pthread_mutex_lock(&output_lock);
     std::queue<std::string> cache_update;
     std::string file_path = "cache_"+ content + ".txt";
-    char j_buffer[BUFFER_SIZE];
+    char old_key[BUFFER_SIZE];
     std::fstream cache;
-    cache.open(file_path, std::fstream::in|std::fstream::trunc);
-    cache.getline(j_buffer, BUFFER_SIZE);
+    
+    cache.open(file_path, std::fstream::in);
+    cache.getline(old_key, BUFFER_SIZE);
     cache.close();
-    if(std::strlen(j_buffer) == 0){ //new file because it's empty
-        
+    cache.clear();
+    if(std::strlen(old_key) == 0){ //new file because it's empty
+        //write_cache()
+        pthread_mutex_lock(&size_lock);
         for(std::map<std::string, Json::Value>::iterator it = j_objMap.begin(); it != j_objMap.end(); ++it){
-            std::string map_payload = it->first + ":"+ it->second.toStyledString() + "\n";
             
-//            int channel_index =0;
-//            while(it->second.isValidIndex(channel_index)){
-//                map_payload += it->second[channel_index].asString();
-//                channel_index++;
-//            }
+            std::string map_payload = it->first + ":\n"+ it->second.toStyledString() + "\n*break*\n"; //writer->write(it->second) + "\n";//
             cache_update.push(map_payload);
-            //+ scribe->write(it->second) + "\n";
         }
+        pthread_mutex_unlock(&size_lock);
     }else{
+        
         cache.open(file_path, std::fstream::in);
-        do{
-            size_t num_key_digits = std::strcspn(j_buffer, ":");
-            char old_key[num_key_digits+1];
-            strncpy(old_key, j_buffer, num_key_digits);
-            old_key[num_key_digits+1] = '\n';
-            if(channel_id.compare(old_key) == 0 && content.compare("messages")==0){
+//        std::string test;
+//        std::fstream test_cache;
+//        test_cache.open("test_cache.txt", std::fstream::out|std::fstream::trunc);
+//        while(std::getline(cache, test)){
+//            test_cache.write(test.c_str(), test.length());
+//        }
+//        test_cache.close();
+        
+        //cache.getline(old_key, BUFFER_SIZE);
+        std::string old_Key;
+        std::string file_value;
+        std::string raw_json;
+        std::getline(cache, old_Key);
+        while(std::getline(cache, file_value)){
+           
+            if(!(file_value.compare("*break*")==0)){
+                raw_json += file_value;
+            }else{
+                old_Key.pop_back();
+                bool parseSuccessful = reader.parse(raw_json, cached_data);
+                if(!parseSuccessful){
+                    std::cout << reader.getFormatedErrorMessages();
+                }
+                
+                std::string cache_payload;
                 try{
-                    j_objMap.at(old_key);
-                }
-                catch(const std::out_of_range &oor){
-                    //found nothing/out of date
+                    if(cached_data.toStyledString().compare(j_objMap.at(old_Key).toStyledString()) == 0){
+                        cache_payload = std::string(old_Key) + ":\n" + cached_data.toStyledString() + "\n*break*\n";
+                        cache_update.push(cache_payload);
+                    }else{
+                        cache_payload = std::string(old_Key) + ":\n" + j_objMap.at(old_Key).toStyledString() + "\n*break*\n";
+                        cache_update.push(cache_payload);
+                    }
+                }catch(const std::out_of_range &oor){
                     
-                } //was found/not out of date
-                char *json = j_buffer + num_key_digits + 1;
-                if(strcmp(json, j_objMap[old_key].asCString()) != 0 ){
-                    std::string key(old_key);
-                    std::string map_payload = key + ":" + j_objMap[key].toStyledString() + "\n";
-                    cache_update.push(map_payload);
                 }
-                cache_update.push(j_buffer);
+                std::getline(cache, old_Key);
             }
-//            }else{
-//                cache_update.push(j_buffer);
-//            }
-        }while(cache.getline(j_buffer, BUFFER_SIZE));
-        cache.close();
+//            
+//            size_t num_key_digits = std::strcspn(old_key, ":");
+//            old_key[num_key_digits] = '\0';
+//            
+//            int peek = cache.peek();
+//            
+//            //reader.parse(cache, cached_data);
+//            
+//            //old key is not found in new map
+//            std::getline(cache, old_Key);
+            
+            //cache.getline(old_key, BUFFER_SIZE);
+        
+        }
         
     }
-    
-    remove(file_path.c_str());
-    cache.open(file_path, std::fstream::out|std::fstream::app);
+    cache.close();
+    cache.clear();
+    cache.open(file_path, std::fstream::out|std::fstream::trunc);
     while(!cache_update.empty()){
+        
         std::string map_payload = cache_update.front();
         cache.write(map_payload.c_str(), map_payload.length());
         cache_update.pop();
     }
     cache.close();
-    // else check if content is updated and if not update contents
+     //else check if content is updated and if not update contents
+    pthread_mutex_unlock(&output_lock);
+    delete writer;
 }
 
 
@@ -140,7 +173,7 @@ std::vector<std::string> cache_channel_list(std::string slack_token, std::map<st
     std::string param = "";
     call_slack(slack_token, methodName, payload, param);
     std::vector<std::string> channels = extract_channels(payload, j_channelMap);
-    cache_upkeep("channels", j_channelMap, "");
+    cache_upkeep("channels", j_channelMap);
     
     return channels;
     
@@ -171,7 +204,10 @@ std::vector<std::string> extract_messages(std::string &payload, std::string chan
     std::vector<std::string> messages;
     Json::Value jObj = parse_payload(payload);
     const Json::Value j_messageList = jObj.get("messages", "default");
+    pthread_mutex_lock(&map_lock);
     j_messageMap.insert(std::pair<std::string, Json::Value>(channel_id, j_messageList));
+    pthread_mutex_unlock(&map_lock);
+    //sem_post(map_lock);
     int messageIndex = 0;
     while(j_messageList.isValidIndex(messageIndex)){
         if(isMessage(j_messageList[messageIndex])){
@@ -190,30 +226,42 @@ std::string get_channel_id(Json::Value j_channel){
     return channel_id;
 }
 
-std::vector<std::string> cache_message_history(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value>& j_messageMap){
+//std::vector<std::string> cache_message_history(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value>& j_messageMap){
+//    std::string payload = "";
+//    std::string methodName = "channels.history";
+//    std::string channel_id = get_channel_id(j_channel);
+//    std::string param = "&channel=" + channel_id;
+//    call_slack(slack_token, methodName, payload, param);
+//    
+//    std::vector<std::string> messages = extract_messages(payload, channel_id, j_messageMap);
+//    cache_upkeep("messages", j_messageMap);
+//    
+//    return messages;
+//
+//}
+//
+//void cache_message_history_num(std::string slack_token, std::string channel, std::map<std::string, Json::Value> &j_channelMap, std::map<std::string, Json::Value> &j_messageMap ){
+//        cache_message_history(slack_token, j_channelMap[channel], j_messageMap);
+//}
+
+std::vector<std::string> add_messageMap(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value> & j_messageMap){
     std::string payload = "";
     std::string methodName = "channels.history";
     std::string channel_id = get_channel_id(j_channel);
     std::string param = "&channel=" + channel_id;
     call_slack(slack_token, methodName, payload, param);
-    pthread_mutex_lock(&SHUTDOWN);
     std::vector<std::string> messages = extract_messages(payload, channel_id, j_messageMap);
-    cache_upkeep("messages", j_messageMap, channel_id);
-    pthread_mutex_unlock(&SHUTDOWN);
     return messages;
-
-}
-
-void cache_message_history_num(std::string slack_token, std::string channel, std::map<std::string, Json::Value> &j_channelMap, std::map<std::string, Json::Value> &j_messageMap ){
-        cache_message_history(slack_token, j_channelMap[channel], j_messageMap);
 }
 
 void show_message_history(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value>& j_messageMap){
-    std::vector<std::string> messages = cache_message_history(slack_token, j_channel, j_messageMap);
+    std::vector<std::string> messages = add_messageMap(slack_token, j_channel, j_messageMap);
+    //cache_message_history(slack_token, j_channel, j_messageMap);
     std::cout << j_channel["name"].asString()<<" - Message History: \n";
     for(int message_index = 0; message_index < messages.size(); message_index++){
         std::cout << messages[message_index] << "\n";
     }
+    cache_upkeep("messages", j_messageMap);
 }
 
 const void show_message_history_num(std::string slack_token, std::string channel, std::map<std::string, Json::Value> &j_channelMap, std::map<std::string, Json::Value> &j_messageMap ){
@@ -245,6 +293,8 @@ void* thread_show_history(void* threadarg){
     return NULL;
 }
 
+
+
 void select_channel(std::string slack_token, std::vector<std::string> channelList,  std::map<std::string, Json::Value> &j_channelMap, std::map<std::string, Json::Value> &j_messageMap){
     void * status;
     char selected[CHANNEL_NAME_MAX_LENGTH];
@@ -257,6 +307,7 @@ void select_channel(std::string slack_token, std::vector<std::string> channelLis
     
     td.j_channelMap_ptr = &j_channelMap;
     td.j_messageMap_ptr = &j_messageMap;
+    pthread_mutex_lock(&size_lock);
     if(isdigit(selected[0])){
         int num;
         //converts string to int
@@ -274,11 +325,11 @@ void select_channel(std::string slack_token, std::vector<std::string> channelLis
         
         for(int i = 0; i <channelList.size(); i++){
             if(i != num){
-                cache_message_history_num(slack_token, channelList[i], j_channelMap, j_messageMap);
+                add_messageMap(slack_token, j_channelMap[channelList[i]], j_messageMap);
             }
-           
         }
         
+        //cache_message_history_num(slack_token, channelList[i], j_channelMap, j_messageMap);
         
     }else{
         td.channel = j_channelMap[selected];
@@ -287,13 +338,17 @@ void select_channel(std::string slack_token, std::vector<std::string> channelLis
             std::cout << "couldn't create thread";
             exit(-1);
         }
+        
         for(std::map<std::string, Json::Value>::iterator it = j_channelMap.begin(); it != j_channelMap.end(); ++it){
             if(std::strcmp(selected, it->first.c_str()) != 0){
-                cache_message_history(slack_token, j_channelMap[it->first.c_str()], j_messageMap);
+                add_messageMap(slack_token, j_channelMap[it->first.c_str()], j_messageMap);
+                //cache_message_history(slack_token, j_channelMap[it->first.c_str()], j_messageMap);
             }
         }
         
     }
+    pthread_mutex_unlock(&size_lock);
+    cache_upkeep("messages", j_messageMap);
     pthread_join(threads[0], &status);
 }
 
@@ -302,7 +357,9 @@ int main(int argc, const char * argv[]) {
     /*Pseudo code to implement:
      1)intro output
      */
-    pthread_mutex_init(&SHUTDOWN, NULL);
+    pthread_mutex_init(&output_lock, NULL);
+    pthread_mutex_init(&size_lock, NULL);
+    pthread_mutex_init(&map_lock, NULL);
     std::string slack_token;
     std::cout << "Welcome to Slack!\n";
     std::cout << "Please provide token: ";
@@ -312,7 +369,8 @@ int main(int argc, const char * argv[]) {
     std::map<std::string, Json::Value> j_messageMap;
      //2)get/list all available channels
     std::vector<std::string> channelList = get_channel_list(slack_token, j_channelMap);
-    sem_init(&map_lock, 0, -4);
+    //int sem_num = -channelList.size() +1;
+    //map_lock = sem_open("map_lock", O_CREAT, 0644, sem_num);
      //3)wait for select channel/show message history
     select_channel(slack_token, channelList, j_channelMap, j_messageMap);
 //    std::cout << "final shabang!\n";
@@ -321,8 +379,9 @@ int main(int argc, const char * argv[]) {
 //    }
 //    
      //4)cache data
-    
-    pthread_mutex_destroy(&SHUTDOWN);
+    pthread_mutex_destroy(&map_lock);
+    pthread_mutex_destroy(&size_lock);
+    pthread_mutex_destroy(&output_lock);
     //pthread_exit(NULL);
 
     return 0;
