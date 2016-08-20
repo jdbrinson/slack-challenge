@@ -13,11 +13,14 @@
 #include <pthread.h>
 #include <fstream>
 #include <queue>
+#include <stdio.h>
+#include <semaphore.h>
 
 const std::string APIURL = "https://slack.com/api/";
 const int CHANNEL_NAME_MAX_LENGTH = 21;
 pthread_mutex_t SHUTDOWN;
-const int BUFFER_SIZE = 2000;
+const int BUFFER_SIZE = 20;
+sem_t map_lock;
 
 size_t retrieve_data_callback(char *data, size_t size, size_t nmemb, void *raw_json){
     ((std::string *)raw_json)->append(data, size*nmemb);
@@ -106,13 +109,16 @@ void cache_upkeep(const std::string content, std::map<std::string, Json::Value> 
                     cache_update.push(map_payload);
                 }
                 cache_update.push(j_buffer);
-            }else{
-                cache_update.push(j_buffer);
             }
+//            }else{
+//                cache_update.push(j_buffer);
+//            }
         }while(cache.getline(j_buffer, BUFFER_SIZE));
         cache.close();
         
     }
+    
+    remove(file_path.c_str());
     cache.open(file_path, std::fstream::out|std::fstream::app);
     while(!cache_update.empty()){
         std::string map_payload = cache_update.front();
@@ -189,9 +195,8 @@ std::vector<std::string> cache_message_history(std::string slack_token, Json::Va
     std::string methodName = "channels.history";
     std::string channel_id = get_channel_id(j_channel);
     std::string param = "&channel=" + channel_id;
-    pthread_mutex_lock(&SHUTDOWN);
     call_slack(slack_token, methodName, payload, param);
-    
+    pthread_mutex_lock(&SHUTDOWN);
     std::vector<std::string> messages = extract_messages(payload, channel_id, j_messageMap);
     cache_upkeep("messages", j_messageMap, channel_id);
     pthread_mutex_unlock(&SHUTDOWN);
@@ -307,6 +312,7 @@ int main(int argc, const char * argv[]) {
     std::map<std::string, Json::Value> j_messageMap;
      //2)get/list all available channels
     std::vector<std::string> channelList = get_channel_list(slack_token, j_channelMap);
+    sem_init(&map_lock, 0, -4);
      //3)wait for select channel/show message history
     select_channel(slack_token, channelList, j_channelMap, j_messageMap);
 //    std::cout << "final shabang!\n";
