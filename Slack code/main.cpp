@@ -10,12 +10,14 @@
 #include <string>
 #include <curl/curl.h>
 #include "json/json.h"
-
 #include <pthread.h>
+#include <fstream>
+#include <queue>
 
 const std::string APIURL = "https://slack.com/api/";
 const int CHANNEL_NAME_MAX_LENGTH = 21;
 pthread_mutex_t SHUTDOWN;
+const int BUFFER_SIZE = 2000;
 
 size_t retrieve_data_callback(char *data, size_t size, size_t nmemb, void *raw_json){
     ((std::string *)raw_json)->append(data, size*nmemb);
@@ -26,7 +28,7 @@ void call_slack(std::string slack_token, std::string methodName, std::string &pa
     CURL *curl;
     curl = curl_easy_init();
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, retrieve_data_callback);
-    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&payload);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &payload);
     std::string request_url = APIURL + methodName +"?token=" + slack_token + param;
     curl_easy_setopt(curl, CURLOPT_URL, request_url.c_str());
     if(curl){
@@ -39,7 +41,7 @@ void call_slack(std::string slack_token, std::string methodName, std::string &pa
 Json::Value parse_payload(std::string &payload){
     Json::Value jObj;
     Json::Reader reader;
-    bool parsingSuccessful = reader.parse(payload.c_str(), jObj);
+    bool parsingSuccessful = reader.parse(payload, jObj);
     if(!parsingSuccessful){
         std::cout<< "failed to parse" << reader.getFormatedErrorMessages();
     }
@@ -53,20 +55,89 @@ std::vector<std::string> extract_channels(std::string &payload, std::map<std::st
     int channel_index = 0;
     const char* channel_name = "name";
     while(j_channelList.isValidIndex(channel_index)){
-        channels.push_back(j_channelList[channel_index][channel_name].asString());
+        channels.push_back(j_channelList[channel_index][channel_name].toStyledString());
         j_channelMap.insert(std::pair<std::string, Json::Value>(channels[channel_index], j_channelList[channel_index]));
         channel_index++;
     }
     return channels;
 }
 
+void cache_upkeep(const std::string content, std::map<std::string, Json::Value> &j_objMap, std::string channel_id){
+    //create_cache if none
+    std::queue<std::string> cache_update;
+    std::string file_path = "cache_"+ content + ".txt";
+    char j_buffer[BUFFER_SIZE];
+    std::fstream cache;
+    cache.open(file_path, std::fstream::in|std::fstream::trunc);
+    cache.getline(j_buffer, BUFFER_SIZE);
+    cache.close();
+    if(std::strlen(j_buffer) == 0){ //new file because it's empty
+        
+        for(std::map<std::string, Json::Value>::iterator it = j_objMap.begin(); it != j_objMap.end(); ++it){
+            std::string map_payload = it->first + ":"+ it->second.toStyledString() + "\n";
+            
+//            int channel_index =0;
+//            while(it->second.isValidIndex(channel_index)){
+//                map_payload += it->second[channel_index].asString();
+//                channel_index++;
+//            }
+            cache_update.push(map_payload);
+            //+ scribe->write(it->second) + "\n";
+        }
+    }else{
+        cache.open(file_path, std::fstream::in);
+        do{
+            size_t num_key_digits = std::strcspn(j_buffer, ":");
+            char old_key[num_key_digits+1];
+            strncpy(old_key, j_buffer, num_key_digits);
+            old_key[num_key_digits+1] = '\n';
+            if(channel_id.compare(old_key) == 0 && content.compare("messages")==0){
+                try{
+                    j_objMap.at(old_key);
+                }
+                catch(const std::out_of_range &oor){
+                    //found nothing/out of date
+                    
+                } //was found/not out of date
+                char *json = j_buffer + num_key_digits + 1;
+                if(strcmp(json, j_objMap[old_key].asCString()) != 0 ){
+                    std::string key(old_key);
+                    std::string map_payload = key + ":" + j_objMap[key].toStyledString() + "\n";
+                    cache_update.push(map_payload);
+                }
+                cache_update.push(j_buffer);
+            }else{
+                cache_update.push(j_buffer);
+            }
+        }while(cache.getline(j_buffer, BUFFER_SIZE));
+        cache.close();
+        
+    }
+    cache.open(file_path, std::fstream::out|std::fstream::app);
+    while(!cache_update.empty()){
+        std::string map_payload = cache_update.front();
+        cache.write(map_payload.c_str(), map_payload.length());
+        cache_update.pop();
+    }
+    cache.close();
+    // else check if content is updated and if not update contents
+}
+
+
 std::vector<std::string> cache_channel_list(std::string slack_token, std::map<std::string, Json::Value> &j_channelMap){
+    
+    std::ofstream channel_cache;
+    channel_cache.open("cache/channels.txt");
+    
     std::string payload = "";
     std::string methodName = "channels.list";
     std::string param = "";
     call_slack(slack_token, methodName, payload, param);
     std::vector<std::string> channels = extract_channels(payload, j_channelMap);
+    cache_upkeep("channels", j_channelMap, "");
+    
     return channels;
+    
 }
 
 std::vector<std::string> get_channel_list(std::string slack_token, std::map<std::string, Json::Value> &j_channelMap){
@@ -82,12 +153,12 @@ std::vector<std::string> get_channel_list(std::string slack_token, std::map<std:
 bool isMessage(const Json::Value j_message){
     const char* type = "type";
     std::string message = "message";
-    return message.compare(j_message[type].asString()) == 0;
+    return message.compare(j_message[type].toStyledString()) == 0;
 }
 
 std::string extract_text(Json::Value j_message){
     const char* text = "text";
-    return j_message[text].asString();
+    return j_message[text].toStyledString();
 }
 
 std::vector<std::string> extract_messages(std::string &payload, std::string channel_id, std::map<std::string, Json::Value> &j_messageMap){
@@ -109,7 +180,7 @@ std::vector<std::string> extract_messages(std::string &payload, std::string chan
 std::string get_channel_id(Json::Value j_channel){
     std::string channel_id = "";
     const char* id = "id";
-    channel_id = j_channel[id].asString();
+    channel_id = j_channel[id].toStyledString();
     return channel_id;
 }
 
@@ -121,6 +192,7 @@ std::vector<std::string> cache_message_history(std::string slack_token, Json::Va
     call_slack(slack_token, methodName, payload, param);
     pthread_mutex_lock(&SHUTDOWN);
     std::vector<std::string> messages = extract_messages(payload, channel_id, j_messageMap);
+    cache_upkeep("messages", j_messageMap, channel_id);
     pthread_mutex_unlock(&SHUTDOWN);
     return messages;
 
@@ -132,7 +204,7 @@ void cache_message_history_num(std::string slack_token, std::string channel, std
 
 void show_message_history(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value>& j_messageMap){
     std::vector<std::string> messages = cache_message_history(slack_token, j_channel, j_messageMap);
-    std::cout << j_channel["name"].asString() <<" - Message History: \n";
+    std::cout << j_channel["name"].toStyledString()<<" - Message History: \n";
     for(int message_index = 0; message_index < messages.size(); message_index++){
         std::cout << messages[message_index] << "\n";
     }
