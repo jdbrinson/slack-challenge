@@ -55,7 +55,7 @@ std::vector<std::string> extract_channels(std::string &payload, std::map<std::st
     int channel_index = 0;
     const char* channel_name = "name";
     while(j_channelList.isValidIndex(channel_index)){
-        channels.push_back(j_channelList[channel_index][channel_name].toStyledString());
+        channels.push_back(j_channelList[channel_index][channel_name].asString());
         j_channelMap.insert(std::pair<std::string, Json::Value>(channels[channel_index], j_channelList[channel_index]));
         channel_index++;
     }
@@ -153,12 +153,12 @@ std::vector<std::string> get_channel_list(std::string slack_token, std::map<std:
 bool isMessage(const Json::Value j_message){
     const char* type = "type";
     std::string message = "message";
-    return message.compare(j_message[type].toStyledString()) == 0;
+    return message.compare(j_message[type].asString()) == 0;
 }
 
 std::string extract_text(Json::Value j_message){
     const char* text = "text";
-    return j_message[text].toStyledString();
+    return j_message[text].asString();
 }
 
 std::vector<std::string> extract_messages(std::string &payload, std::string channel_id, std::map<std::string, Json::Value> &j_messageMap){
@@ -180,7 +180,7 @@ std::vector<std::string> extract_messages(std::string &payload, std::string chan
 std::string get_channel_id(Json::Value j_channel){
     std::string channel_id = "";
     const char* id = "id";
-    channel_id = j_channel[id].toStyledString();
+    channel_id = j_channel[id].asString(); //j_channel[id].toStyledString();
     return channel_id;
 }
 
@@ -189,8 +189,9 @@ std::vector<std::string> cache_message_history(std::string slack_token, Json::Va
     std::string methodName = "channels.history";
     std::string channel_id = get_channel_id(j_channel);
     std::string param = "&channel=" + channel_id;
-    call_slack(slack_token, methodName, payload, param);
     pthread_mutex_lock(&SHUTDOWN);
+    call_slack(slack_token, methodName, payload, param);
+    
     std::vector<std::string> messages = extract_messages(payload, channel_id, j_messageMap);
     cache_upkeep("messages", j_messageMap, channel_id);
     pthread_mutex_unlock(&SHUTDOWN);
@@ -204,7 +205,7 @@ void cache_message_history_num(std::string slack_token, std::string channel, std
 
 void show_message_history(std::string slack_token, Json::Value j_channel, std::map<std::string, Json::Value>& j_messageMap){
     std::vector<std::string> messages = cache_message_history(slack_token, j_channel, j_messageMap);
-    std::cout << j_channel["name"].toStyledString()<<" - Message History: \n";
+    std::cout << j_channel["name"].asString()<<" - Message History: \n";
     for(int message_index = 0; message_index < messages.size(); message_index++){
         std::cout << messages[message_index] << "\n";
     }
