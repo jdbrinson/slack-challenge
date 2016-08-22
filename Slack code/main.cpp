@@ -38,6 +38,49 @@ Json::Value parse_payload(std::string &payload){
     return jObj;
 }
 
+bool edit_map(std::string key, Json::Value new_value, std::map<std::string, Json::Value> &j_objMap){
+    pthread_mutex_lock(&map_lock);
+    Json::Value old_value;
+    
+    try{
+        old_value = j_objMap.at(key);
+//        pthread_mutex_lock(&output_lock);
+//        std::cout << "key = " << key <<"\n element: " << old_value.toStyledString() << "\n";
+//        
+//        pthread_mutex_unlock(&output_lock);
+    }catch(const std::out_of_range &oor){
+        //map didin't already contain key
+        j_objMap[key] = new_value;
+        pthread_mutex_unlock(&map_lock);
+//        pthread_mutex_lock(&output_lock);
+//        std::cout << "key = " << key <<"\n element: " << new_value.toStyledString() << "\n";
+//        pthread_mutex_unlock(&output_lock);
+        pthread_mutex_lock(&queue_lock);
+        info_updated.push(true);
+        pthread_mutex_unlock(&queue_lock);
+        return true;
+    }
+    //map did contain key
+    std::pair<std::map<std::string, Json::Value>::iterator, bool> i_Map;
+    i_Map = j_objMap.insert(std::pair<std::string, Json::Value>(key, new_value));
+    i_Map.first->second = new_value;
+    pthread_mutex_unlock(&map_lock);
+
+    if(new_value == old_value){
+        //std::cout << "new value ==  old value\n";
+        return false;
+    }else{
+        //return true if the information has been updated
+        pthread_mutex_lock(&output_lock);
+        std::cout << "old value was: " << old_value.toStyledString() << "\n";
+        std::cout << "new value is: " << j_objMap[key].toStyledString() << "\n";
+        pthread_mutex_unlock(&output_lock);
+        pthread_mutex_lock(&queue_lock);
+        info_updated.push(true);
+        pthread_mutex_unlock(&queue_lock);
+        return true;
+    }
+}
 
 
 void build_cacheMap(const std::string content, std::map<std::string, Json::Value> & cacheMap){
@@ -62,9 +105,11 @@ void build_cacheMap(const std::string content, std::map<std::string, Json::Value
             old_key.pop_back();
             cached_data = parse_payload(raw_json);
             test.write(cached_data.toStyledString().c_str(), cached_data.toStyledString().length());
-            pthread_mutex_lock(&map_lock);
-            cacheMap.insert(std::pair<std::string, Json::Value>(old_key, cached_data));
-            pthread_mutex_unlock(&map_lock);
+            //pthread_mutex_lock(&map_lock);
+            edit_map(old_key, cached_data, cacheMap);
+//            cacheMap.insert(std::pair<std::string, Json::Value>(old_key, cached_data));
+//            pthread_mutex_unlock(&map_lock);
+            raw_json.clear();
             std::getline(cache, old_key);
         }
         
@@ -130,18 +175,13 @@ void call_slack(std::string slack_token, std::string methodName, std::string &pa
     curl_easy_cleanup(curl);
 }
 
-void edit_map(std::map<std::string, Json::Value> &j_objMap){
-    std::pair<std::map<std::string, Json::Value>::iterator, bool> i_Map;
-    j_objMap.insert(std::pair<std::string, Json::Value>(name, j_obj));
-    
-}
+
 
 std::vector<std::string> extract_channels(std::string &payload, std::map<std::string, Json::Value> &j_channelMap){
     std::vector<std::string> channels;
-    std::map<std::string, Json::Value>::iterator i_Map;
     if(payload.length()==0 && j_channelMap.size() > 0){//cached data!
-        for(i_Map.first = j_channelMap.begin(); i_Map.first != j_channelMap.end(); ++i_Map.first){
-            channels.push_back(i_Map.first->first);
+        for(std::map<std::string, Json::Value>::iterator i_Map = j_channelMap.begin(); i_Map!= j_channelMap.end(); ++i_Map){
+            channels.push_back(i_Map->first);
         }
     }else{
         Json::Value jObj = parse_payload(payload);
@@ -152,12 +192,8 @@ std::vector<std::string> extract_channels(std::string &payload, std::map<std::st
         while(j_channelList.isValidIndex(channel_index)){
             
             std::string name = j_channelList[channel_index]["name"].asString();
-            pthread_mutex_lock(&map_lock);
+            edit_map(name, j_channelList[channel_index], j_channelMap);
             
-            j_channelMap.insert(std::pair<std::string, Json::Value>(name, j_channelList[channel_index]));
-            pthread_mutex_unlock(&map_lock);
-            if(
-            i_Map.first->
             channels.push_back(name);
             channel_index++;
         }
@@ -204,7 +240,7 @@ void cache_upkeep(const std::string content, std::map<std::string, Json::Value> 
         }
         pthread_mutex_unlock(&queue_lock);
         //build_cacheMap(content, cacheMap);
-        //if(!test_map(cacheMap, j_objMap)){
+//        if(!test_map(cacheMap, j_objMap)){
         write_cache(content, j_objMap);
         //}
     }
@@ -261,9 +297,10 @@ std::vector<std::string> extract_messages(std::string &payload, std::string chan
     }else{
         Json::Value jObj = parse_payload(payload);
         j_messageList = jObj.get("messages", "default");
-        pthread_mutex_lock(&map_lock);
-        j_messageMap.insert(std::pair<std::string, Json::Value>(channel_id, j_messageList));
-        pthread_mutex_unlock(&map_lock);
+        //pthread_mutex_lock(&map_lock);
+        edit_map(channel_id, j_messageList, j_messageMap);
+        //j_messageMap.insert(std::pair<std::string, Json::Value>(channel_id, j_messageList));
+        //pthread_mutex_unlock(&map_lock);
     }
     int messageIndex = 0;
     while(j_messageList.isValidIndex(messageIndex)){
