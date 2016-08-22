@@ -452,18 +452,20 @@ int main(int argc, const char * argv[]) {
     std::cout << "Please provide token: ";
     
     std::cin >> slack_token;
+    std::string command = "run";
+    while(command.compare("run") == 0 || command[0]=='c'){
      //2)get/list all available channels
-    std::vector<std::string> channelList = get_channel_list(slack_token, j_channelMap);
+    
+        std::vector<std::string> channelList = get_channel_list(slack_token, j_channelMap);
     //int sem_num = -channelList.size() +1;
     //map_lock = sem_open("map_lock", O_CREAT, 0644, sem_num);
      //3)wait for select channel/show message history
-    select_channel(slack_token, channelList, j_channelMap, j_messageMap);
-//    std::cout << "final shabang!\n";
-//    for(std::map<std::string, Json::Value>::iterator it=j_messageMap.begin(); it!=j_messageMap.end(); ++it){
-//        std::cout << it->first << " : " << it->second << "\n";
-//    }
-//    
-     //4)cache data
+        select_channel(slack_token, channelList, j_channelMap, j_messageMap);
+        std::cout << "next commands:\n Quit: quit or q\n Select new channel: channels or c\n input command: ";
+        std::cin >> command;
+    }
+ 
+    
     pthread_mutex_destroy(&map_lock);
     pthread_mutex_destroy(&file_lock);
     pthread_mutex_destroy(&output_lock);
