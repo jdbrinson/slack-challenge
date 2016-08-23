@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintLocationsKey" : {
+    "71314413C06E0BD87CC927074A282AB97C8A1902" : {
+      "DVTSourceControlBranchIdentifierKey" : "master",
+      "DVTSourceControlLocationRevisionKey" : "e3fd38b6280b28d6f51b74d7b7e2cb873716f6f9",
+      "DVTSourceControlBranchOptionsKey" : 4,
+      "DVTSourceControlWorkspaceBlueprintLocationTypeKey" : "DVTSourceControlBranch"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "71314413C06E0BD87CC927074A282AB97C8A1902",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "06C899CE-0D46-4CD0-B9AD-6582781BEA64",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "71314413C06E0BD87CC927074A282AB97C8A1902" : "Slack%20code\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Slack code",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Slack code.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jdbrinson\/slack-challenge.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "71314413C06E0BD87CC927074A282AB97C8A1902"
+    }
+  ]
+}

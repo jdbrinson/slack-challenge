@@ -1,0 +1,188 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		077B9F1A1D66883E00B0F3AC /* .clang-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
+		077B9F1B1D66883E00B0F3AC /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
+		077B9F1C1D66883E00B0F3AC /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
+		077B9F1D1D66883E00B0F3AC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		077B9F1E1D66883E00B0F3AC /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		077B9F1F1D66883E00B0F3AC /* amalgamate.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = amalgamate.py; sourceTree = "<group>"; };
+		077B9F201D66883E00B0F3AC /* appveyor.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = appveyor.yml; sourceTree = "<group>"; };
+		077B9F211D66883E00B0F3AC /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
+		077B9F221D66883E00B0F3AC /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		077B9F231D66883E00B0F3AC /* dev.makefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = dev.makefile; sourceTree = "<group>"; };
+		077B9F241D66883E00B0F3AC /* devtools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = devtools; sourceTree = "<group>"; };
+		077B9F251D66883E00B0F3AC /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; path = doc; sourceTree = "<group>"; };
+		077B9F261D66883E00B0F3AC /* doxybuild.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = doxybuild.py; sourceTree = "<group>"; };
+		077B9F271D66883E00B0F3AC /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		077B9F281D66883E00B0F3AC /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		077B9F291D66883E00B0F3AC /* makefiles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = makefiles; sourceTree = "<group>"; };
+		077B9F2A1D66883E00B0F3AC /* makerelease.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = makerelease.py; sourceTree = "<group>"; };
+		077B9F2B1D66883E00B0F3AC /* NEWS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS.txt; sourceTree = "<group>"; };
+		077B9F2C1D66883E00B0F3AC /* pkg-config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "pkg-config"; sourceTree = "<group>"; };
+		077B9F2D1D66883E00B0F3AC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		077B9F2E1D66883E00B0F3AC /* scons-tools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "scons-tools"; sourceTree = "<group>"; };
+		077B9F2F1D66883E00B0F3AC /* SConstruct */ = {isa = PBXFileReference; lastKnownFileType = text; path = SConstruct; sourceTree = "<group>"; };
+		077B9F301D66883E00B0F3AC /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		077B9F311D66883E00B0F3AC /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test; sourceTree = "<group>"; };
+		077B9F321D66883E00B0F3AC /* travis.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = travis.sh; sourceTree = "<group>"; };
+		077B9F331D66883E00B0F3AC /* version */ = {isa = PBXFileReference; lastKnownFileType = text; path = version; sourceTree = "<group>"; };
+		077B9F341D66883E00B0F3AC /* version.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = version.in; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		077B9F141D66883E00B0F3AC = {
+			isa = PBXGroup;
+			children = (
+				077B9F1A1D66883E00B0F3AC /* .clang-format */,
+				077B9F1B1D66883E00B0F3AC /* .DS_Store */,
+				077B9F1C1D66883E00B0F3AC /* .gitattributes */,
+				077B9F1D1D66883E00B0F3AC /* .gitignore */,
+				077B9F1E1D66883E00B0F3AC /* .travis.yml */,
+				077B9F1F1D66883E00B0F3AC /* amalgamate.py */,
+				077B9F201D66883E00B0F3AC /* appveyor.yml */,
+				077B9F211D66883E00B0F3AC /* AUTHORS */,
+				077B9F221D66883E00B0F3AC /* CMakeLists.txt */,
+				077B9F231D66883E00B0F3AC /* dev.makefile */,
+				077B9F241D66883E00B0F3AC /* devtools */,
+				077B9F251D66883E00B0F3AC /* doc */,
+				077B9F261D66883E00B0F3AC /* doxybuild.py */,
+				077B9F271D66883E00B0F3AC /* include */,
+				077B9F281D66883E00B0F3AC /* LICENSE */,
+				077B9F291D66883E00B0F3AC /* makefiles */,
+				077B9F2A1D66883E00B0F3AC /* makerelease.py */,
+				077B9F2B1D66883E00B0F3AC /* NEWS.txt */,
+				077B9F2C1D66883E00B0F3AC /* pkg-config */,
+				077B9F2D1D66883E00B0F3AC /* README.md */,
+				077B9F2E1D66883E00B0F3AC /* scons-tools */,
+				077B9F2F1D66883E00B0F3AC /* SConstruct */,
+				077B9F301D66883E00B0F3AC /* src */,
+				077B9F311D66883E00B0F3AC /* test */,
+				077B9F321D66883E00B0F3AC /* travis.sh */,
+				077B9F331D66883E00B0F3AC /* version */,
+				077B9F341D66883E00B0F3AC /* version.in */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		077B9F191D66883E00B0F3AC /* jsoncpp */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 077B9F351D66883E00B0F3AC /* Build configuration list for PBXLegacyTarget "jsoncpp" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "/Users/julienbrinson/Documents/Coding Things!/Slack code/jsoncpp";
+			dependencies = (
+			);
+			name = jsoncpp;
+			passBuildSettingsInEnvironment = 1;
+			productName = jsoncpp;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		077B9F151D66883E00B0F3AC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = 077B9F181D66883E00B0F3AC /* Build configuration list for PBXProject "jsoncpp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 077B9F141D66883E00B0F3AC;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				077B9F191D66883E00B0F3AC /* jsoncpp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		077B9F161D66883E00B0F3AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		077B9F171D66883E00B0F3AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		077B9F361D66883E00B0F3AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = jsoncpp;
+			};
+			name = Debug;
+		};
+		077B9F371D66883E00B0F3AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = jsoncpp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		077B9F181D66883E00B0F3AC /* Build configuration list for PBXProject "jsoncpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				077B9F161D66883E00B0F3AC /* Debug */,
+				077B9F171D66883E00B0F3AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		077B9F351D66883E00B0F3AC /* Build configuration list for PBXLegacyTarget "jsoncpp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				077B9F361D66883E00B0F3AC /* Debug */,
+				077B9F371D66883E00B0F3AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 077B9F151D66883E00B0F3AC /* Project object */;
+}

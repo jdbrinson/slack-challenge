@@ -1,0 +1,210 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		077B9F421D66885300B0F3AC /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
+		077B9F431D66885300B0F3AC /* acinclude.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = acinclude.m4; sourceTree = "<group>"; };
+		077B9F441D66885300B0F3AC /* aclocal.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
+		077B9F451D66885300B0F3AC /* buildconf */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = buildconf; sourceTree = "<group>"; };
+		077B9F461D66885300B0F3AC /* buildconf.bat */ = {isa = PBXFileReference; lastKnownFileType = text; path = buildconf.bat; sourceTree = "<group>"; };
+		077B9F471D66885300B0F3AC /* CHANGES */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGES; sourceTree = "<group>"; };
+		077B9F481D66885300B0F3AC /* CMake */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CMake; sourceTree = "<group>"; };
+		077B9F491D66885300B0F3AC /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		077B9F4A1D66885300B0F3AC /* compile */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = compile; sourceTree = "<group>"; };
+		077B9F4B1D66885300B0F3AC /* config.guess */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.guess; sourceTree = "<group>"; };
+		077B9F4C1D66885300B0F3AC /* config.sub */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.sub; sourceTree = "<group>"; };
+		077B9F4D1D66885400B0F3AC /* configure */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
+		077B9F4E1D66885400B0F3AC /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		077B9F4F1D66885400B0F3AC /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		077B9F501D66885400B0F3AC /* curl-config.in */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "curl-config.in"; sourceTree = "<group>"; };
+		077B9F511D66885400B0F3AC /* depcomp */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = depcomp; sourceTree = "<group>"; };
+		077B9F521D66885400B0F3AC /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
+		077B9F531D66885400B0F3AC /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		077B9F541D66885400B0F3AC /* install-sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "install-sh"; sourceTree = "<group>"; };
+		077B9F551D66885400B0F3AC /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lib; sourceTree = "<group>"; };
+		077B9F561D66885400B0F3AC /* libcurl.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = libcurl.pc.in; sourceTree = "<group>"; };
+		077B9F571D66885400B0F3AC /* ltmain.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ltmain.sh; sourceTree = "<group>"; };
+		077B9F581D66885400B0F3AC /* m4 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = m4; sourceTree = "<group>"; };
+		077B9F591D66885400B0F3AC /* MacOSX-Framework */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "MacOSX-Framework"; sourceTree = "<group>"; };
+		077B9F5A1D66885400B0F3AC /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		077B9F5B1D66885400B0F3AC /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		077B9F5C1D66885400B0F3AC /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		077B9F5D1D66885400B0F3AC /* maketgz */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = maketgz; sourceTree = "<group>"; };
+		077B9F5E1D66885400B0F3AC /* missing */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = missing; sourceTree = "<group>"; };
+		077B9F5F1D66885400B0F3AC /* packages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = packages; sourceTree = "<group>"; };
+		077B9F601D66885400B0F3AC /* projects */ = {isa = PBXFileReference; lastKnownFileType = folder; path = projects; sourceTree = "<group>"; };
+		077B9F611D66885400B0F3AC /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		077B9F621D66885400B0F3AC /* RELEASE-NOTES */ = {isa = PBXFileReference; lastKnownFileType = text; path = "RELEASE-NOTES"; sourceTree = "<group>"; };
+		077B9F631D66885400B0F3AC /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
+		077B9F641D66885400B0F3AC /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		077B9F651D66885400B0F3AC /* test-driver */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "test-driver"; sourceTree = "<group>"; };
+		077B9F661D66885400B0F3AC /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tests; sourceTree = "<group>"; };
+		077B9F671D66885400B0F3AC /* winbuild */ = {isa = PBXFileReference; lastKnownFileType = folder; path = winbuild; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		077B9F3C1D66885300B0F3AC = {
+			isa = PBXGroup;
+			children = (
+				077B9F421D66885300B0F3AC /* .DS_Store */,
+				077B9F431D66885300B0F3AC /* acinclude.m4 */,
+				077B9F441D66885300B0F3AC /* aclocal.m4 */,
+				077B9F451D66885300B0F3AC /* buildconf */,
+				077B9F461D66885300B0F3AC /* buildconf.bat */,
+				077B9F471D66885300B0F3AC /* CHANGES */,
+				077B9F481D66885300B0F3AC /* CMake */,
+				077B9F491D66885300B0F3AC /* CMakeLists.txt */,
+				077B9F4A1D66885300B0F3AC /* compile */,
+				077B9F4B1D66885300B0F3AC /* config.guess */,
+				077B9F4C1D66885300B0F3AC /* config.sub */,
+				077B9F4D1D66885400B0F3AC /* configure */,
+				077B9F4E1D66885400B0F3AC /* configure.ac */,
+				077B9F4F1D66885400B0F3AC /* COPYING */,
+				077B9F501D66885400B0F3AC /* curl-config.in */,
+				077B9F511D66885400B0F3AC /* depcomp */,
+				077B9F521D66885400B0F3AC /* docs */,
+				077B9F531D66885400B0F3AC /* include */,
+				077B9F541D66885400B0F3AC /* install-sh */,
+				077B9F551D66885400B0F3AC /* lib */,
+				077B9F561D66885400B0F3AC /* libcurl.pc.in */,
+				077B9F571D66885400B0F3AC /* ltmain.sh */,
+				077B9F581D66885400B0F3AC /* m4 */,
+				077B9F591D66885400B0F3AC /* MacOSX-Framework */,
+				077B9F5A1D66885400B0F3AC /* Makefile */,
+				077B9F5B1D66885400B0F3AC /* Makefile.am */,
+				077B9F5C1D66885400B0F3AC /* Makefile.in */,
+				077B9F5D1D66885400B0F3AC /* maketgz */,
+				077B9F5E1D66885400B0F3AC /* missing */,
+				077B9F5F1D66885400B0F3AC /* packages */,
+				077B9F601D66885400B0F3AC /* projects */,
+				077B9F611D66885400B0F3AC /* README */,
+				077B9F621D66885400B0F3AC /* RELEASE-NOTES */,
+				077B9F631D66885400B0F3AC /* scripts */,
+				077B9F641D66885400B0F3AC /* src */,
+				077B9F651D66885400B0F3AC /* test-driver */,
+				077B9F661D66885400B0F3AC /* tests */,
+				077B9F671D66885400B0F3AC /* winbuild */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		077B9F411D66885300B0F3AC /* curl-7.50.1 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 077B9F681D66885400B0F3AC /* Build configuration list for PBXLegacyTarget "curl-7.50.1" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "/Users/julienbrinson/Documents/Coding Things!/Slack code/curl-7.50.1";
+			dependencies = (
+			);
+			name = "curl-7.50.1";
+			passBuildSettingsInEnvironment = 1;
+			productName = "curl-7.50.1";
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		077B9F3D1D66885300B0F3AC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = 077B9F401D66885300B0F3AC /* Build configuration list for PBXProject "curl-7.50.1" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 077B9F3C1D66885300B0F3AC;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				077B9F411D66885300B0F3AC /* curl-7.50.1 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		077B9F3E1D66885300B0F3AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		077B9F3F1D66885300B0F3AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		077B9F691D66885400B0F3AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "curl-7.50.1";
+			};
+			name = Debug;
+		};
+		077B9F6A1D66885400B0F3AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "curl-7.50.1";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		077B9F401D66885300B0F3AC /* Build configuration list for PBXProject "curl-7.50.1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				077B9F3E1D66885300B0F3AC /* Debug */,
+				077B9F3F1D66885300B0F3AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		077B9F681D66885400B0F3AC /* Build configuration list for PBXLegacyTarget "curl-7.50.1" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				077B9F691D66885400B0F3AC /* Debug */,
+				077B9F6A1D66885400B0F3AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 077B9F3D1D66885300B0F3AC /* Project object */;
+}
