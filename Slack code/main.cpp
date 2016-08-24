@@ -391,6 +391,9 @@ void run_background(std::map<std::string, Json::Value> *j_channelMap, std::map<s
     cache_upkeep(*slack_token, j_channelMap, j_messageMap);
     while(finished.empty()){
         back_end.wait_for(u_lock, std::chrono::seconds(30));
+        if(!finished.empty()){
+            return;
+        }
         output_lock.lock();
         std::cout << "\nBackground checking Slack server\n";
         output_lock.unlock();
@@ -472,8 +475,8 @@ int main(int argc, const char * argv[]) {
     std::cin >> slack_token;
     back_end.notify_all();
     execute_slack(slack_token, j_channelMap, j_messageMap);
-    
-        finished.push_back(true);
+    finished.push_back(true);
+    back_end.notify_all();
     background.join();
     return 0;
 }
