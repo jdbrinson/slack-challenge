@@ -1,0 +1,340 @@
+C04LJNMNY:
+[
+   {
+      "text" : "<@U04LJPN08>: I could go for a salad :fork_and_knife:",
+      "ts" : "1467408132.000003",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "text" : "<!here|@here>: anyone up for lunch? I'm starving!",
+      "ts" : "1467408035.000002",
+      "type" : "message",
+      "user" : "U04LJPN08"
+   },
+   {
+      "icons" : {
+         "emoji" : ":white_flower:",
+         "image_64" : "https://slack.global.ssl.fastly.net/d4bf/img/emoji_2015_2/apple/1f4ae.png"
+      },
+      "subtype" : "bot_message",
+      "text" : "@channel: You should probably not put your Slack tokens on GitHub",
+      "ts" : "1462897537.011564",
+      "type" : "message",
+      "username" : "Friendly Whitehat"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64RPM|rudolf> has joined the channel",
+      "ts" : "1430526926.000007",
+      "type" : "message",
+      "user" : "U04M64RPM"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64L79|teresa> has joined the channel",
+      "ts" : "1430526873.000006",
+      "type" : "message",
+      "user" : "U04M64L79"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64CQB|steve> has joined the channel",
+      "ts" : "1430526813.000005",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPN08|laura> has joined the channel",
+      "ts" : "1430526762.000004",
+      "type" : "message",
+      "user" : "U04LJPN08"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPD46|anthony> has joined the channel",
+      "ts" : "1430526711.000003",
+      "type" : "message",
+      "user" : "U04LJPD46"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJP4DE|nolan> has joined the channel",
+      "ts" : "1430526647.000002",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJNMNL|natalie> has joined the channel",
+      "ts" : "1430526539.000000",
+      "type" : "message",
+      "user" : "U04LJNMNL"
+   }
+]
+
+*break*
+C04LJNMP0:
+[
+   {
+      "bot_id" : "B19LR1N5U",
+      "subtype" : "bot_message",
+      "text" : "Don't put your Slack API keys publicly on GitHub. <https://github.com/monisun/Float/blob/7973968eab1336db3f366eddba1d53ac600299c0/Float/SlackClient.swift>",
+      "ts" : "1463964772.247075",
+      "type" : "message",
+      "username" : "Slack API Tester"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64RPM|rudolf> has joined the channel",
+      "ts" : "1430526926.000007",
+      "type" : "message",
+      "user" : "U04M64RPM"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64L79|teresa> has joined the channel",
+      "ts" : "1430526873.000006",
+      "type" : "message",
+      "user" : "U04M64L79"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64CQB|steve> has joined the channel",
+      "ts" : "1430526813.000005",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPN08|laura> has joined the channel",
+      "ts" : "1430526762.000004",
+      "type" : "message",
+      "user" : "U04LJPN08"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPD46|anthony> has joined the channel",
+      "ts" : "1430526711.000003",
+      "type" : "message",
+      "user" : "U04LJPD46"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJP4DE|nolan> has joined the channel",
+      "ts" : "1430526647.000002",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJNMNL|natalie> has joined the channel",
+      "ts" : "1430526539.000000",
+      "type" : "message",
+      "user" : "U04LJNMNL"
+   }
+]
+
+*break*
+C1N8Z2Q1E:
+[
+   {
+      "text" : "But still, great facts <@U04LJPN08> and <@U04LJP4DE>!",
+      "ts" : "1467408402.000009",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "text" : "I can top both of you. When Al Capone was held at Alcatraz, he played the banjo during regular Sunday concerts! :musical_note:",
+      "ts" : "1467408234.000008",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64CQB|steve> has joined the channel",
+      "ts" : "1467408155.000007",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "reactions" : [
+         {
+            "count" : 1,
+            "name" : "cookie",
+            "users" : [ "U04M64CQB" ]
+         }
+      ],
+      "text" : "That's pretty cool! I also just learned that *fortune cookies* were invented here!",
+      "ts" : "1467407970.000006",
+      "type" : "message",
+      "user" : "U04LJPN08"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPN08|laura> has joined the channel",
+      "ts" : "1467407888.000005",
+      "type" : "message",
+      "user" : "U04LJPN08"
+   },
+   {
+      "reactions" : [
+         {
+            "count" : 1,
+            "name" : "cool",
+            "users" : [ "U04LJPN08" ]
+         }
+      ],
+      "text" : "\"Oro en Paz, Fierro en Guerra\" is the motto of San Francisco, translating to \"Gold in Peace, Iron in War\"",
+      "ts" : "1467407818.000004",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   },
+   {
+      "purpose" : "Talk about the city by the bay",
+      "subtype" : "channel_purpose",
+      "text" : "<@U04LJP4DE|nolan> set the channel purpose: Talk about the city by the bay",
+      "ts" : "1467407757.000003",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJP4DE|nolan> has joined the channel",
+      "ts" : "1467407757.000002",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   }
+]
+
+*break*
+C1N920R9V:
+[
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04M64CQB|steve> has joined the channel",
+      "ts" : "1467411904.000002",
+      "type" : "message",
+      "user" : "U04M64CQB"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPN08|laura> has joined the channel",
+      "ts" : "1467408045.000009",
+      "type" : "message",
+      "user" : "U04LJPN08"
+   },
+   {
+      "text" : "<@U04LJPD46>: excellent fact. I recently learned that cats can't taste sweetness! :candy:",
+      "ts" : "1467407686.000008",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJP4DE|nolan> has joined the channel",
+      "ts" : "1467407612.000006",
+      "type" : "message",
+      "user" : "U04LJP4DE"
+   },
+   {
+      "bot_id" : null,
+      "display_as_bot" : false,
+      "file" : {
+         "channels" : [ "C1N920R9V" ],
+         "comments_count" : 1,
+         "created" : 1467407519,
+         "display_as_bot" : false,
+         "editable" : false,
+         "external_type" : "",
+         "filetype" : "jpg",
+         "groups" : [],
+         "id" : "F1N8Y67PA",
+         "image_exif_rotation" : 1,
+         "ims" : [],
+         "initial_comment" : {
+            "channel" : "",
+            "comment" : "This is a cat burrito",
+            "created" : 1467407519,
+            "id" : "Fc1N9D5Z34",
+            "is_intro" : true,
+            "timestamp" : 1467407519,
+            "user" : "U04LJPD46"
+         },
+         "is_external" : false,
+         "is_public" : true,
+         "mimetype" : "image/jpeg",
+         "mode" : "hosted",
+         "name" : "maxresdefault.jpg",
+         "original_h" : 1200,
+         "original_w" : 1600,
+         "permalink" : "https://ios-exercise.slack.com/files/anthony/F1N8Y67PA/maxresdefault.jpg",
+         "permalink_public" : "https://slack-files.com/T04LJNMNJ-F1N8Y67PA-4929482592",
+         "pretty_type" : "JPEG",
+         "public_url_shared" : false,
+         "reactions" : [
+            {
+               "count" : 1,
+               "name" : "smiley_cat",
+               "users" : [ "U04LJP4DE" ]
+            }
+         ],
+         "size" : 136356,
+         "thumb_1024" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_1024.jpg",
+         "thumb_1024_h" : 768,
+         "thumb_1024_w" : 1024,
+         "thumb_160" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_160.jpg",
+         "thumb_360" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_360.jpg",
+         "thumb_360_h" : 270,
+         "thumb_360_w" : 360,
+         "thumb_480" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_480.jpg",
+         "thumb_480_h" : 360,
+         "thumb_480_w" : 480,
+         "thumb_64" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_64.jpg",
+         "thumb_720" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_720.jpg",
+         "thumb_720_h" : 540,
+         "thumb_720_w" : 720,
+         "thumb_80" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_80.jpg",
+         "thumb_960" : "https://files.slack.com/files-tmb/T04LJNMNJ-F1N8Y67PA-162f9bb116/maxresdefault_960.jpg",
+         "thumb_960_h" : 720,
+         "thumb_960_w" : 960,
+         "timestamp" : 1467407519,
+         "title" : "cat burrito",
+         "url_private" : "https://files.slack.com/files-pri/T04LJNMNJ-F1N8Y67PA/maxresdefault.jpg",
+         "url_private_download" : "https://files.slack.com/files-pri/T04LJNMNJ-F1N8Y67PA/download/maxresdefault.jpg",
+         "user" : "U04LJPD46",
+         "username" : ""
+      },
+      "subtype" : "file_share",
+      "text" : "<@U04LJPD46|anthony> uploaded a file: <https://ios-exercise.slack.com/files/anthony/F1N8Y67PA/maxresdefault.jpg|cat burrito> and commented: This is a cat burrito",
+      "ts" : "1467407522.000005",
+      "type" : "message",
+      "upload" : true,
+      "user" : "U04LJPD46",
+      "username" : "<@U04LJPD46|anthony>"
+   },
+   {
+      "text" : "Cat fact of the day: domestic cats are descended from near eastern wildcats, having diverged around 8,000 BCE in West Asia!",
+      "ts" : "1467407463.000004",
+      "type" : "message",
+      "user" : "U04LJPD46"
+   },
+   {
+      "purpose" : "Discuss feline pursuits",
+      "subtype" : "channel_purpose",
+      "text" : "<@U04LJPD46|anthony> set the channel purpose: Discuss feline pursuits",
+      "ts" : "1467407378.000003",
+      "type" : "message",
+      "user" : "U04LJPD46"
+   },
+   {
+      "subtype" : "channel_join",
+      "text" : "<@U04LJPD46|anthony> has joined the channel",
+      "ts" : "1467407377.000002",
+      "type" : "message",
+      "user" : "U04LJPD46"
+   }
+]
+
+*break*
